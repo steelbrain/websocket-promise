@@ -1,0 +1,19 @@
+{
+  "name": "websocket-promise",
+  "version": "0.0.1",
+  "description": "A promise-based websocket server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steelbrain/websocket-promise.git"
+  },
+  "author": "steelbrain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/steelbrain/websocket-promise/issues"
+  },
+  "homepage": "https://github.com/steelbrain/websocket-promise#readme"
+}
