@@ -1,6 +1,6 @@
 {
   "name": "websocket-promise",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A promise-based websocket server",
   "main": "Source/Server",
   "scripts": {
