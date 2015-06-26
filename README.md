@@ -52,3 +52,5 @@ class WebSocketP{ // Available under same name in browser
 
 #### License
 This project is licensed under the terms of MIT License. See the License file for more info.
+
+[Le-Emitter]:https://github.com/steelbrain/Le-Emitter
