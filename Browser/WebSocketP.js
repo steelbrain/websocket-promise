@@ -1,4 +1,7 @@
 "use strict"
+// @Compiler-Compress "true"
+// @Compiler-Transpile "true"
+// @Compiler-Output "WebSocketP.min.js"
 class WebSocketP extends EventEmitter{
   constructor(Options){
     super()
@@ -44,3 +47,4 @@ class WebSocketP extends EventEmitter{
     this.Connection.close()
   }
 }
+window.WebSocketP = WebSocketP
