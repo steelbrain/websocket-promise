@@ -28,7 +28,7 @@ class WebSocketP extends EventEmitter{
   }
   Send(Type, Message){
     Message = Message || ''
-    this.Connection.send(JSON.stringify({Type: 'Broadcast', SubType: Type, Message: Message, Exchange: true}))
+    this.Connection.send(JSON.stringify({Type: 'Broadcast', SubType: Type, Message: Message, EXCHANGE: true}))
     return this
   }
   Request(Type, Message){

@@ -36,8 +36,8 @@ class Client extends EventEmitter{
     })
   }
   Broadcast(Type, Message){ // Same like broadcast but works like Broadcast Except
-    for(let Connection of this.Server.clients){
-      let ClientConnection = this.Connections.get(Connection)
+    for(let Connection of this.Server.Server.clients){
+      let ClientConnection = this.Server.Connections.get(Connection)
       if(ClientConnection && ClientConnection !== this){ // Of course it's not undefined but still
         ClientConnection.Send(Type, Message)
       }
@@ -45,7 +45,7 @@ class Client extends EventEmitter{
   }
   Send(Type, Message){
     Message = Message || ''
-    this.Connection.send(JSON.stringify({Type: 'Broadcast', SubType: Type, Message: Message, Exchange: true}))
+    this.Connection.send(JSON.stringify({Type: 'Broadcast', SubType: Type, Message: Message, EXCHANGE: true}))
     return this
   }
   Request(Type, Message){
