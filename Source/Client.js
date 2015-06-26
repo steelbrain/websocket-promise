@@ -3,9 +3,10 @@
 let EventEmitter = require('events').EventEmitter
 
 class Client extends EventEmitter{
-  constructor(Connection){
+  constructor(Connection, Server){
     super()
     let Me = this
+    this.Server = Server
     this.Connection = Connection
     this.Connection.on('close', this.emit.bind(this, 'close'))
     this.Connection.on('message', function(Data, Flags){
@@ -33,6 +34,14 @@ class Client extends EventEmitter{
       Job.Result = "Pong"
       this.Finished(Job)
     })
+  }
+  Broadcast(Type, Message){ // Same like broadcast but works like Broadcast Except
+    for(let Connection of this.Server.clients){
+      let ClientConnection = this.Connections.get(Connection)
+      if(ClientConnection && ClientConnection !== this){ // Of course it's not undefined but still
+        ClientConnection.Send(Type, Message)
+      }
+    }
   }
   Send(Type, Message){
     Message = Message || ''
