@@ -2,7 +2,7 @@
   "name": "websocket-promise",
   "version": "0.0.1",
   "description": "A promise-based websocket server",
-  "main": "index.js",
+  "main": "Source/Server",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
