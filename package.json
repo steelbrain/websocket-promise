@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/steelbrain/websocket-promise/issues"
   },
-  "homepage": "https://github.com/steelbrain/websocket-promise#readme"
+  "homepage": "https://github.com/steelbrain/websocket-promise#readme",
+  "dependencies":{
+    "ws": "latest"
+  }
 }
