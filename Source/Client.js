@@ -1,6 +1,7 @@
 "use strict"
 
-let EventEmitter = require('events').EventEmitter
+const Communication = require('sb-communication')
+const EventEmitter = require('events').EventEmitter
 
 class Client extends EventEmitter{
   constructor(Connection, Server){
@@ -8,64 +9,42 @@ class Client extends EventEmitter{
     let Me = this
     this.Server = Server
     this.Connection = Connection
+    this.Communication = new Communication(false)
     this.Connection.on('close', this.emit.bind(this, 'close'))
+    this.sendCallback = function(message) {
+      Connection.send(JSON.stringify(message))
+    }
     this.Connection.on('message', function(Data, Flags){
       if(Flags.binary){
         return Me.emit('Binary', Flags.buffer)
       }
       try {
         Data = JSON.parse(Data)
-        if(!Data.EXCHANGE) throw null
       } catch(err){
         return Me.emit('ParseError', Data)
       }
-      if(Data.Type === 'Request'){
-        Data.Result = null
-        Me.emit(Data.SubType, Data.Message, Data)
-        Me.emit('All', Data.Message, Data)
-      } else if(Data.Type === 'Broadcast'){
-        Me.emit(Data.SubType, Data.Message, Data)
-        Me.emit('All', Data.Message, Data)
-      } else if (Data.Type === 'Reply'){
-        Me.emit(`JOB:${Data.ID}`, Data.Message)
-      }
+      Me.Communication.gotMessage(Me.sendCallback, Data)
     })
-    this.on('Ping', function(_, Job){
-      Job.Result = "Pong"
-      this.Finished(Job)
+    this.on('Ping', function(Job){
+      Job.Response = "Pong"
     })
   }
-  Broadcast(Type, Message){ // Same like broadcast but works like Broadcast Except
+  on(type, callback) {
+    return this.Communication.on(type, callback)
+  }
+  broadcast(Type, Message){ // Same like broadcast but works like Broadcast Except
     for(let Connection of this.Server.Server.clients){
       let ClientConnection = this.Server.Connections.get(Connection)
       if(ClientConnection && ClientConnection !== this){ // Of course it's not undefined but still
-        ClientConnection.Send(Type, Message)
+        ClientConnection.request(Type, Message)
       }
     }
   }
-  Send(Type, Message){
-    Message = Message || ''
-    this.Connection.send(JSON.stringify({Type: 'Broadcast', SubType: Type, Message: Message, EXCHANGE: true}))
-    return this
+  request(Type, Message){
+    return this.Communication.request(this.sendCallback, Type, Message)
   }
-  Request(Type, Message){
-    Message = Message || ''
-    let Me = this
-    return new Promise(function(Resolve){
-      let JobID = (Math.random().toString(36)+'00000000000000000').slice(2, 7+2)
-      Me.once(`JOB:${JobID}`, Resolve)
-      Me.Connection.send(JSON.stringify({Type: 'Request', SubType: Type, Message: Message, ID: JobID, EXCHANGE: true}))
-    })
-  }
-  Finished(Job){
-    this.Connection.send(JSON.stringify({Type: 'Reply', ID: Job.ID, Message: Job.Result, EXCHANGE: true}))
-  }
-  Terminate(){
+  terminate(){
     this.Connection.close()
-  }
-  onClose(Callback){
-    this.on('close', Callback)
-    return this
   }
 }
 
