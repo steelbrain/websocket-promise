@@ -1,10 +1,11 @@
 {
   "name": "websocket-promise",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "A promise-based websocket server",
   "main": "Source/Server",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "uc-compile Browser/WebSocketP.js"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,8 @@
     "url": "https://github.com/steelbrain/websocket-promise/issues"
   },
   "homepage": "https://github.com/steelbrain/websocket-promise#readme",
-  "dependencies":{
+  "dependencies": {
+    "sb-communication": "^3.0.0",
     "ws": "latest"
   }
 }
