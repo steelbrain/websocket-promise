@@ -10,10 +10,9 @@ Node
 var WebSocketP = require('websocket-promise')
 var Server = new WebSocketP({port: 8090})
 Server.onConnection(function(Client){
-  Client.on('Hello', function(Request, Job){
-    console.log(Request) // "World"
-    Job.Result = Request
-    Client.Finished(Job)
+  Client.on('Hello', function(Job){
+    console.log(Job.Message) // "World"
+    Job.Response = 'World'
   })
 })
 ```
@@ -35,18 +34,14 @@ class Server{
   Broadcast(Type: String, Message: Any): void
 }
 class ServerClient{
-  Send(Type: String, Message: Any): void
-  Request(Type: String, Message: Any): Promise<Result>
-  Finished(Job: Job): void
-  on(Type: String, Callback: Function<Request: Any, Job: Job>): void
-  Terminate(): void
+  on(Type: String, Callback: Function): Disposable
+  request(Type: String, Message): Promise
+  terminate(): void
 }
 class WebSocketP{ // Available under same name in browser
-  Send(Type: String, Message: Any): void
-  Request(Type: String, Message: Any): Promise<Result>
-  Finished(Job: Job): void
-  on(Type: String, Callback: Function<Request: Any, Job: Job>): void
-  Terminate(): void
+  on(Type: String, Callback: Function): Disposable
+  request(Type: String, Message): Promise
+  terminate(): void
 }
 ```
 
