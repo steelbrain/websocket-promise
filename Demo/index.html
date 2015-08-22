@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebSocketP Demo</title>
+  <script src="../Browser/WebSocketP.min.js"></script>
+</head>
+<body>
+  <script>
+    var socket = new WebSocketP('ws://localhost:8082')
+    setTimeout(function(){
+      socket.request('Ping').then(function(response){
+        console.log(response)
+      })
+    }, 200)
+  </script>
+</body>
+</html>
