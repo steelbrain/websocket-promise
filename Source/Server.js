@@ -9,10 +9,10 @@ class Server extends EventEmitter{
   constructor(Options){
     super()
     this.Server = WS.createServer(Options)
-    this.Server.on('connection', this._onConnection.bind(this))
+    this.Server.on('connection', this.gotConnection.bind(this))
     this.Connections = new WeakMap // this.Server.clients <--> this.Connections
   }
-  _onConnection(Connection){
+  gotConnection(Connection){
     let ClientConnection = new Client(Connection, this)
     this.Connections.set(Connection, ClientConnection)
     this.emit('connection', ClientConnection)
@@ -25,7 +25,7 @@ class Server extends EventEmitter{
     for(let Connection of this.Server.clients){
       let ClientConnection = this.Connections.get(Connection)
       if(ClientConnection) { // Of course it's not undefined but still
-        ClientConnection.Send(Type, Message)
+        ClientConnection.request(Type, Message)
       }
     }
   }
