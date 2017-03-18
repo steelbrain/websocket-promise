@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/steelbrain/websocket-promise#readme",
   "dependencies": {
-    "sb-communication": "^3.0.0",
+    "sb-communication": "^4.0.1",
     "ws": "latest"
   }
 }
