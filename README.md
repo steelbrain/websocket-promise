@@ -1,5 +1,7 @@
 WebSocket-Promise
 ===========
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/steelbrain/websocket-promise.svg)](https://greenkeeper.io/)
 WebSocket-Promise is an extremely lightweight Promise wrapper for native HTML5 WebSockets written in JS. It provides an easy to use API on both the Browser and Server Side.
 
 WebSocket-Promise internally uses [Le-Emitter][Le-Emitter] for the Browser-Sided event emitting part, You can replace it with an EventEmitter of your choice.
